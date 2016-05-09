@@ -48,4 +48,33 @@ defmodule InAction.Recursion do
     1 + range(from + 1, to)
   end
 
+  @doc """
+    Takes list and returns a list with only positive numbers
+
+    ## Examples
+
+        iex> InAction.Recursion.positive([])
+        []
+
+        iex> InAction.Recursion.positive([-1, 1])
+        [1]
+
+        iex> InAction.Recursion.positive([1,2])
+        [1,2]
+
+        iex> InAction.Recursion.positive([1,2,-1,5,2])
+        [1,2,5,2]
+
+    """
+  def positive([]) do
+    []
+  end
+  def positive([head|tail]) do
+    if head > 0 do
+      [head|positive(tail)]
+    else
+      positive(tail)
+    end
+  end
+
 end

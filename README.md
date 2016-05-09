@@ -1,6 +1,6 @@
 # InAction
 
-**Samples for Elixir in Action book**
+**Samples from `Elixir in Action` book**
 
 ## How to run tests
 
