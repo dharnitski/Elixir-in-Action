@@ -3,4 +3,6 @@ defmodule InAction.ToDoListTest do
 
   doctest ToDoList
 
+  doctest ToDoList.Map
+
 end
