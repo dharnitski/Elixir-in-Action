@@ -11,7 +11,7 @@ defmodule Fraction do
 
         iex> Fraction.add(Fraction.new(1,2), Fraction.new(1,4)) |>
         ...> Fraction.value
-        0.76
+        0.75
     """
 
   defstruct a: nil, b: nil

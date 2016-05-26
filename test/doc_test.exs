@@ -1,7 +1,7 @@
 defmodule InAction.DocTest do
   use ExUnit.Case
 
-  doctest ToDoList
+  doctest ToDoList.Simple
 
   doctest ToDoList.Map
 
