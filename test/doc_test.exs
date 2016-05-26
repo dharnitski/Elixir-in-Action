@@ -5,6 +5,8 @@ defmodule InAction.DocTest do
 
   doctest ToDoList.Map
 
+  doctest ToDoList
+
   doctest Fraction
 
 end
