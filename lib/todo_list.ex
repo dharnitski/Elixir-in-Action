@@ -29,6 +29,16 @@ defmodule ToDoList do
         iex> ToDoList.entries(todo_list, {2013, 12, 19})
         [%{date: {2013, 12, 19}, id: 1, title: "Dentist"}]
 
+        iex> todo_list = ToDoList.new |>
+        ...> ToDoList.add_entry("not valid type")
+        ** (BadMapError) expected a map, got: "not valid type"
+
+        iex> todo_list = ToDoList.new |>
+        ...> ToDoList.add_entry(%{date: {2013, 12, 19}, title: "Dentist"})
+        iex> ToDoList.entries("not valid type", {2013, 12, 19})
+        ** (FunctionClauseError) no function clause matching in ToDoList.entries/2
+
+
     """
   defstruct auto_id: 1, entries: HashDict.new
 
@@ -49,6 +59,7 @@ defmodule ToDoList do
 
   def entries(%ToDoList{entries: entries}, date) do
     entries
+    #Stream performs lazy transformation
     |> Stream.filter(fn({_, entry}) ->
          entry.date == date
        end)
