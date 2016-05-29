@@ -42,7 +42,28 @@ defmodule ToDoList do
     """
   defstruct auto_id: 1, entries: Map.new
 
-  def new, do: %ToDoList{}
+  @doc """
+
+    New To Do List
+
+    ## Examples
+
+    iex> ToDoList.new([
+    ...> %{date: {2013, 12, 19}, id: 1, title: "Dentist"},
+    ...> %{date: {2014, 12, 19}, id: 1, title: "Movie"}
+    ...> ])
+    %ToDoList{auto_id: 3, entries: %{1 => %{date: {2013, 12, 19}, id: 1, title: "Dentist"}, 2 => %{date: {2014, 12, 19}, id: 2, title: "Movie"}}}
+  """
+
+  def new(entries \\ []) do
+    Enum.reduce(
+      entries,
+      %ToDoList{},
+      fn(entry, todo_list_acc) ->
+        add_entry(todo_list_acc, entry)
+      end
+    )
+  end
 
   def add_entry(
     %ToDoList{entries: entries, auto_id: auto_id} = todo_list,
