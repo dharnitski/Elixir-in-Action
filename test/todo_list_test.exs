@@ -30,6 +30,11 @@ defmodule InAction.ToDoListTest do
     end
   end
 
-
+  test "Deletion of not existing id should keep enrties intact" do
+    assert ToDoList.new
+    |> ToDoList.add_entry(%{date: {2013, 12, 19}, title: "Dentist"})
+    |> ToDoList.delete_entry(2) ==
+    %ToDoList{auto_id: 2, entries: %{1 => %{date: {2013, 12, 19}, id: 1, title: "Dentist"}}}
+  end
 
 end
