@@ -48,4 +48,9 @@ defmodule InAction.ToDoListTest do
           }
   end
 
+  test "To String" do
+    assert String.Chars.to_string(ToDoList.new()) == "#ToDoList"
+  end
+
+
 end

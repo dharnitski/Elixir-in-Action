@@ -42,6 +42,12 @@ defmodule ToDoList do
     """
   defstruct auto_id: 1, entries: Map.new
 
+  defimpl String.Chars, for: ToDoList do
+    def to_string(_) do
+      "#ToDoList"
+    end
+  end
+
   @doc """
 
     New To Do List
@@ -167,6 +173,8 @@ defmodule ToDoList do
 
 end
 
+# https://github.com/sasa1977/elixir-in-action/blob/master/code_samples/ch04/todo_import.ex - check for more readable sample
+
 defmodule ToDoList.CsvImporter do
 
   def import(path) do
@@ -184,7 +192,7 @@ defmodule ToDoList.CsvImporter do
 
   defp parse_date(date) do
     String.split(date, "/")
-    |> Enum.map(fn (part) -> String.to_integer(part) end)
+    |> Enum.map(&String.to_integer/1)
     |> List.to_tuple
   end
 
