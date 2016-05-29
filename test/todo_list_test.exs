@@ -9,6 +9,13 @@ defmodule InAction.ToDoListTest do
     %ToDoList{auto_id: 2, entries: %{1 => %{date: {2014, 12, 19}, id: 1, title: "Dentist"}}}
   end
 
+  test "Not Existing id should return current data" do
+    assert ToDoList.new
+    |> ToDoList.add_entry(%{date: {2013, 12, 19}, title: "Dentist"})
+    |> ToDoList.update_entry(%{date: {2014, 12, 19}, id: 42, title: "Dentist"}) ==
+    %ToDoList{auto_id: 2, entries: %{1 => %{date: {2013, 12, 19}, id: 1, title: "Dentist"}}}
+  end
+
   test "Update Entry should check data type" do
     assert_raise FunctionClauseError, fn ->
       ToDoList.update_entry("not valid type", %{date: {2014, 12, 19}, id: 1, title: "Dentist"})

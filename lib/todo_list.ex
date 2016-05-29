@@ -122,4 +122,29 @@ defmodule ToDoList do
     update_entry(todo_list, new_entry.id, fn(_) -> new_entry end)
   end
 
+  @doc """
+
+    Deletes existing entry by id
+
+    ## Examples
+
+        iex> ToDoList.new
+        ...> |> ToDoList.add_entry(%{date: {2013, 12, 19}, title: "Dentist"})
+        ...> |> ToDoList.delete_entry(1)
+        %ToDoList{auto_id: 2, entries: %{}}
+  """
+
+
+  def delete_entry(
+    %ToDoList{entries: entries} = todo_list,
+    entry_id) do
+      case entries[entry_id] do
+        nil -> todo_list
+
+        entry ->
+          new_entries = Map.delete(entries, entry.id)
+          %ToDoList{todo_list | entries: new_entries}
+      end
+  end
+
 end
