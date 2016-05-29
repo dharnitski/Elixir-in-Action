@@ -16,7 +16,7 @@ defmodule InAction.ToDoListTest do
   end
 
   test "Lambda in Update Entry should return Map" do
-    assert_raise MatchError, fn ->
+    assert_raise FunctionClauseError, fn ->
       ToDoList.new
         |> ToDoList.add_entry(%{date: {2013, 12, 19}, title: "Dentist"})
         |> ToDoList.update_entry("Not Map")
