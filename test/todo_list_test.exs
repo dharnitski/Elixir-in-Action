@@ -37,4 +37,15 @@ defmodule InAction.ToDoListTest do
     %ToDoList{auto_id: 2, entries: %{1 => %{date: {2013, 12, 19}, id: 1, title: "Dentist"}}}
   end
 
+  test "Import from file" do
+    todo_list = ToDoList.CsvImporter.import("test/todos.csv")
+    assert todo_list == %ToDoList{auto_id: 4,
+            entries: %{
+              1 => %{date: {2013, 12, 19}, id: 1, title: "Dentist"},
+              2 => %{date: {2013, 12, 20}, id: 2, title: "Shopping"},
+              3 => %{date: {2013, 12, 19}, id: 3, title: "Movies"}
+            }
+          }
+  end
+
 end

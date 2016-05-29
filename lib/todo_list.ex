@@ -49,8 +49,8 @@ defmodule ToDoList do
     ## Examples
 
     iex> ToDoList.new([
-    ...> %{date: {2013, 12, 19}, id: 1, title: "Dentist"},
-    ...> %{date: {2014, 12, 19}, id: 1, title: "Movie"}
+    ...> %{date: {2013, 12, 19}, title: "Dentist"},
+    ...> %{date: {2014, 12, 19}, title: "Movie"}
     ...> ])
     %ToDoList{auto_id: 3, entries: %{1 => %{date: {2013, 12, 19}, id: 1, title: "Dentist"}, 2 => %{date: {2014, 12, 19}, id: 2, title: "Movie"}}}
   """
@@ -59,9 +59,7 @@ defmodule ToDoList do
     Enum.reduce(
       entries,
       %ToDoList{},
-      fn(entry, todo_list_acc) ->
-        add_entry(todo_list_acc, entry)
-      end
+      &add_entry(&2, &1)
     )
   end
 
@@ -165,6 +163,29 @@ defmodule ToDoList do
           new_entries = Map.delete(entries, entry.id)
           %ToDoList{todo_list | entries: new_entries}
       end
+  end
+
+end
+
+defmodule ToDoList.CsvImporter do
+
+  def import(path) do
+    File.stream!(path)
+    |> Stream.map(&String.replace(&1, "\n", ""))
+    |> Enum.filter(&(String.length(&1) > 0))
+    |> Enum.map(fn(line) -> map_line(line) end)
+    |> ToDoList.new
+  end
+
+  defp map_line(line) do
+    [date | title] = String.split(line, ",")
+    %{date: parse_date(date), title: hd(title)}
+  end
+
+  defp parse_date(date) do
+    String.split(date, "/")
+    |> Enum.map(fn (part) -> String.to_integer(part) end)
+    |> List.to_tuple
   end
 
 end
