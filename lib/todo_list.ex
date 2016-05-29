@@ -134,7 +134,6 @@ defmodule ToDoList do
         %ToDoList{auto_id: 2, entries: %{}}
   """
 
-
   def delete_entry(
     %ToDoList{entries: entries} = todo_list,
     entry_id) do
