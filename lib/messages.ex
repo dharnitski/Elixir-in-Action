@@ -14,17 +14,16 @@ defmodule Messages do
       end)
     end
 
-    Enum.each(1..5, &async_query.("query #{&1}"))
-
     get_result = fn ->
       receive do
         {:query_result, result} -> result
       end
     end
 
-    results = Enum.map(1..5, fn(_) -> get_result.() end)
-    |> Enum.sort
-
+    1..5
+    |> Enum.map(&async_query.("query #{&1}"))
+    |> Enum.map(fn(_) -> get_result.() end)
+    
   end
 
 end
