@@ -3,10 +3,10 @@
 
 # InAction
 
-**Samples from `Elixir in Action` book**
+**Samples from [Elixir in Action](https://www.manning.com/books/elixir-in-action) book**
 
 ## How to run tests
 
 * Open project folder in console
 
-* Execute command `mix test`
+* Execute command `mix coveralls`

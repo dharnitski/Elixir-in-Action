@@ -48,9 +48,20 @@ defmodule InAction.ToDoListTest do
           }
   end
 
-  test "To String" do
+  test "To String protocol" do
     assert String.Chars.to_string(ToDoList.new()) == "#ToDoList"
   end
 
+  test "Collectable protocol" do
+    entries = [
+      %{date: {2013, 12, 19}, title: "Dentist"},
+      %{date: {2014, 12, 19}, title: "Movie"}
+      ]
+    assert Enum.into(entries, ToDoList.new) ==
+    %ToDoList{auto_id: 3,
+            entries: %{1 => %{date: {2013, 12, 19}, id: 1,
+                title: "Dentist"},
+              2 => %{date: {2014, 12, 19}, id: 2, title: "Movie"}}}
+  end
 
 end
