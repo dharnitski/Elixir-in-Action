@@ -1,5 +1,6 @@
 defmodule CalculatorTest do
   use ExUnit.Case
+  import ExUnit.CaptureIO
 
   test "calculate" do
     calculator_pid = Calculator.start
@@ -10,4 +11,14 @@ defmodule CalculatorTest do
     Calculator.div(calculator_pid, 5)
     assert Calculator.value(calculator_pid) == 3.0
   end
-end  
+
+  test "Invalid Message" do
+    calculator_pid = Calculator.start
+    #cannot capture IO from another process
+    assert capture_io(fn ->
+      send(calculator_pid, {:invalid})
+    end) == ""
+    # == "invalid request {:invalid}"
+
+  end
+end
