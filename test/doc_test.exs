@@ -6,5 +6,6 @@ defmodule InAction.DocTest do
   doctest Fraction
   doctest Circle
   doctest Geometry
-  
+  doctest KeyValueStore
+
 end
