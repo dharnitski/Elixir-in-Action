@@ -12,7 +12,6 @@ defmodule KeyValueStore do
 
         iex> pid = KeyValueStore.start
         iex> KeyValueStore.put(pid, :some_key, :some_value)
-        :ok
         iex> KeyValueStore.get(pid, :some_key)
         :some_value
   """
@@ -29,13 +28,17 @@ defmodule KeyValueStore do
     {Map.get(state, key), state}
   end
 
+  def handle_cast({:put, key, value}, state) do
+    Map.put(state, key, value)
+  end
+
   #interface functions run in client process
   def start do
     ServerProcess.start(KeyValueStore)
   end
 
   def put(pid, key, value) do
-    ServerProcess.call(pid, {:put, key, value})
+    ServerProcess.cast(pid, {:put, key, value})
   end
 
   def get(pid, key) do
