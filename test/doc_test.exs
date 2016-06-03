@@ -7,5 +7,6 @@ defmodule InAction.DocTest do
   doctest Circle
   doctest Geometry
   doctest KeyValueStore
+  doctest KeyValueStore.Manual
 
 end

@@ -1,47 +1,45 @@
 defmodule KeyValueStore do
+  use GenServer
 
   @moduledoc """
 
     ## Examples
 
-        iex> pid = ServerProcess.start(KeyValueStore)
-        iex> ServerProcess.call(pid, {:put, :some_key, :some_value})
+        iex> {:ok, pid} = GenServer.start(KeyValueStore, nil)
+        iex> GenServer.cast(pid, {:put, :some_key, :some_value})
         :ok
-        iex> ServerProcess.call(pid, {:get, :some_key})
+        iex> GenServer.call(pid, {:get, :some_key})
         :some_value
 
-        iex> pid = KeyValueStore.start
+        iex> {:ok, pid} = KeyValueStore.start
         iex> KeyValueStore.put(pid, :some_key, :some_value)
         iex> KeyValueStore.get(pid, :some_key)
         :some_value
   """
 
-  def init do
-    Map.new
+  def init(_) do
+    {:ok, Map.new}
   end
 
   #callback functions invoked in the server process
-  def handle_call({:put, key, value}, state) do
-    {:ok, Map.put(state, key, value)}
-  end
-  def handle_call({:get, key}, state) do
-    {Map.get(state, key), state}
+  def handle_call({:get, key}, _, state) do
+    {:reply, Map.get(state, key), state}
   end
 
   def handle_cast({:put, key, value}, state) do
-    Map.put(state, key, value)
+    {:noreply, Map.put(state, key, value)}
   end
 
   #interface functions run in client process
   def start do
-    ServerProcess.start(KeyValueStore)
+    GenServer.start(KeyValueStore, nil)
   end
 
   def put(pid, key, value) do
-    ServerProcess.cast(pid, {:put, key, value})
+    GenServer.cast(pid, {:put, key, value})
   end
 
   def get(pid, key) do
-    ServerProcess.call(pid, {:get, key})
+    GenServer.call(pid, {:get, key})
   end
 end
