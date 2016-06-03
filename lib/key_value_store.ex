@@ -16,12 +16,12 @@ defmodule KeyValueStore do
         iex> KeyValueStore.get(pid, :some_key)
         :some_value
   """
-
+  
+  #callback functions invoked in the server process
   def init(_) do
     {:ok, Map.new}
   end
 
-  #callback functions invoked in the server process
   def handle_call({:get, key}, _, state) do
     {:reply, Map.get(state, key), state}
   end
