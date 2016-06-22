@@ -22,10 +22,6 @@ defmodule Ets.PageCache do
   end
 
   #interface functions
-  def start do
-    GenServer.start(__MODULE__, nil, name: :ets_page_cache)
-  end
-
   def start_link do
     GenServer.start_link(__MODULE__, nil, name: :ets_page_cache)
   end
